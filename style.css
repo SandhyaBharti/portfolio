@@ -100,6 +100,9 @@ p {
     height: 21px;
     position: relative;
     z-index: 1000;
+    background: transparent;
+    border: none;
+    padding: 5px;
 }
 
 .hamburger span {
@@ -108,6 +111,7 @@ p {
     background-color: #2d3748;
     border-radius: 3px;
     transition: all 0.3s ease;
+    display: block;
 }
 
 .hamburger.active span:nth-child(1) {
@@ -982,7 +986,21 @@ html {
     }
     
     .hamburger {
-        display: block;
+        display: flex !important;
+        flex-direction: column;
+        cursor: pointer;
+        background: transparent;
+        border: 2px solid #2d3748;
+        padding: 5px;
+        border-radius: 4px;
+    }
+    
+    .hamburger:hover {
+        border-color: #667eea;
+    }
+    
+    .hamburger:hover span {
+        background-color: #667eea;
     }
     
     /* Hero Section */
