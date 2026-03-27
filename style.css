@@ -358,6 +358,11 @@ p {
     line-height: 1.6;
 }
 
+.stat-label {
+    font-weight: 500;
+    color: rgb(232, 226, 226);
+}
+
 .about-stats {
     display: flex;
     flex-direction: column;
