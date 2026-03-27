@@ -1,9 +1,10 @@
 // Mobile Navigation Toggle
-const hamburger = document.querySelector('.hamburger');
+const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', () => {
+navToggle.addEventListener('click', () => {
     navMenu.classList.toggle('active');
+    navToggle.classList.toggle('active');
 });
 
 // Smooth Scrolling for Navigation Links
@@ -22,6 +23,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
         
         // Close mobile menu if open
         navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
     });
 });
 
