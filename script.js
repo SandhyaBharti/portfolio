@@ -2,10 +2,12 @@
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('.nav-menu');
 
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    navToggle.classList.toggle('active');
-});
+if (navToggle && navMenu) {
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+    });
+}
 
 // Smooth Scrolling for Navigation Links
 document.querySelectorAll('.nav-link').forEach(link => {
@@ -22,48 +24,80 @@ document.querySelectorAll('.nav-link').forEach(link => {
         }
         
         // Close mobile menu if open
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
+        if (navMenu) navMenu.classList.remove('active');
+        if (navToggle) navToggle.classList.remove('active');
     });
 });
 
-// Active Navigation Highlighting on Scroll
+// Active Navigation Highlighting on Scroll (with throttling)
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-link');
 
+let scrollTimeout;
 window.addEventListener('scroll', () => {
-    let current = '';
+    if (scrollTimeout) {
+        window.cancelAnimationFrame(scrollTimeout);
+    }
     
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
+    scrollTimeout = window.requestAnimationFrame(() => {
+        let current = '';
         
-        if (scrollY >= (sectionTop - 200)) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').substring(1) === current) {
-            link.classList.add('active');
-        }
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            
+            if (scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === current) {
+                link.classList.add('active');
+            }
+        });
     });
 });
 
-// Form Submission
+// Form Submission with validation
 const contactForm = document.querySelector('.form');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        const name = contactForm.querySelector('input[type="text"]').value;
-        const email = contactForm.querySelector('input[type="email"]').value;
-        const message = contactForm.querySelector('textarea').value;
+        const nameInput = contactForm.querySelector('input[type="text"]');
+        const emailInput = contactForm.querySelector('input[type="email"]');
+        const messageInput = contactForm.querySelector('textarea');
         
-        // Create mailto link
-        const mailtoLink = `mailto:sandhyabharti298@gmail.com?subject=Portfolio Contact from ${name}&body=${encodeURIComponent(message)}%0A%0AFrom: ${email}`;
-        window.location.href = mailtoLink;
+        if (!nameInput || !emailInput || !messageInput) {
+            console.error('Form inputs not found');
+            return;
+        }
+        
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const message = messageInput.value.trim();
+        
+        // Basic validation
+        if (!name || !email || !message) {
+            alert('Please fill in all fields');
+            return;
+        }
+        
+        if (!email.includes('@')) {
+            alert('Please enter a valid email address');
+            return;
+        }
+        
+        try {
+            // Create mailto link
+            const mailtoLink = `mailto:sandhyabharti298@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0A%0AFrom: ${encodeURIComponent(email)}`;
+            window.location.href = mailtoLink;
+        } catch (error) {
+            console.error('Error creating mailto link:', error);
+            alert('Error sending message. Please try again.');
+        }
     });
 }
 
@@ -115,13 +149,20 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Parallax Effect for Hero
+// Parallax Effect for Hero (with throttling)
+let parallaxTimeout;
 window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+    if (parallaxTimeout) {
+        window.cancelAnimationFrame(parallaxTimeout);
     }
+    
+    parallaxTimeout = window.requestAnimationFrame(() => {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('.hero');
+        if (hero) {
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        }
+    });
 });
 
 // Project Card Hover Effects
@@ -165,11 +206,15 @@ document.querySelectorAll('.contact-item').forEach(item => {
 // Form Input Focus Effects
 document.querySelectorAll('.form-group input, .form-group textarea').forEach(input => {
     input.addEventListener('focus', () => {
-        input.parentElement.style.transform = 'scale(1.02)';
+        if (input.parentElement) {
+            input.parentElement.style.transform = 'scale(1.02)';
+        }
     });
     
     input.addEventListener('blur', () => {
-        input.parentElement.style.transform = 'scale(1)';
+        if (input.parentElement) {
+            input.parentElement.style.transform = 'scale(1)';
+        }
     });
 });
 
@@ -235,7 +280,7 @@ if (profileImg) {
     profileImg.addEventListener('load', () => {
         profileImg.style.animation = 'profileImageLoad 1s ease forwards';
     });
-});
+}
 
 // Add profile image animation
 const profileImgStyle = document.createElement('style');
