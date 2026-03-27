@@ -108,7 +108,7 @@ p {
 .hamburger span {
     height: 3px;
     width: 100%;
-    background-color: #1a202c !important;
+    background-color: #ffffff !important;
     border-radius: 3px;
     transition: all 0.3s ease;
     display: block;
@@ -989,8 +989,8 @@ html {
         display: flex !important;
         flex-direction: column;
         cursor: pointer;
-        background: white;
-        border: 2px solid #1a202c;
+        background: #2d3748;
+        border: 2px solid #4a5568;
         padding: 5px;
         border-radius: 4px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -998,11 +998,11 @@ html {
     
     .hamburger:hover {
         border-color: #667eea;
-        background: #f7fafc;
+        background: #4a5568;
     }
     
     .hamburger:hover span {
-        background-color: #667eea !important;
+        background-color: #ffffff !important;
     }
     
     /* Hero Section */
@@ -1337,8 +1337,8 @@ html {
     
     .hamburger {
         display: flex;
-        background: white;
-        border: 2px solid #1a202c;
+        background: #2d3748;
+        border: 2px solid #4a5568;
         padding: 5px;
         border-radius: 4px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -1346,11 +1346,11 @@ html {
     
     .hamburger:hover {
         border-color: #667eea;
-        background: #f7fafc;
+        background: #4a5568;
     }
     
     .hamburger:hover span {
-        background-color: #667eea !important;
+        background-color: #ffffff !important;
     }
     
     .skills-grid {
